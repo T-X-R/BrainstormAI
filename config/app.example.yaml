@@ -1,0 +1,37 @@
+# BrainstormAI example configuration
+# Copy to config/app.local.yaml (recommended) and fill in your secrets.
+# Environment variables override these values (prefix: BRAINSTORM_)
+
+app:
+  name: "BrainstormAI"
+  debug: false
+  host: "0.0.0.0"
+  port: 8000
+
+llm:
+  # OpenAI / OpenAI-compatible endpoint
+  default_base_url: "<LLM_DEFAULT_BASE_URL>"
+  default_api_key: "<LLM_DEFAULT_API_KEY>"
+  default_model: "<LLM_DEFAULT_MODEL>"
+  available_models:
+    - "<LLM_AVAILABLE_MODEL_1>"
+  request_timeout: "<LLM_REQUEST_TIMEOUT_SECONDS>"
+
+  # Optional: per-model override (key should match items in available_models)
+  model_endpoints:
+    "<LLM_MODEL_NAME>":
+      model: "<LLM_MODEL_NAME>"
+      api_key: "<LLM_MODEL_API_KEY>"
+      base_url: "<LLM_MODEL_BASE_URL>"
+
+session:
+  max_agents: "<SESSION_MAX_AGENTS>"
+  agent_cooldown_seconds: "<SESSION_AGENT_COOLDOWN_SECONDS>"
+  global_speak_interval_seconds: "<SESSION_GLOBAL_SPEAK_INTERVAL_SECONDS>"
+  silence_end_seconds: "<SESSION_SILENCE_END_SECONDS>"
+  max_total_ai_messages: "<SESSION_MAX_TOTAL_AI_MESSAGES>"
+  pause_timeout_seconds: "<SESSION_PAUSE_TIMEOUT_SECONDS>"
+
+database:
+  url: "<DATABASE_URL>"
+

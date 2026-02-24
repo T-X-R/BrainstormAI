@@ -1,234 +1,40 @@
-# 🧠 BrainstormAI
+# BrainstormAI
 
-**AI 群组头脑风暴** - 让不同性格的 AI 一起讨论你的问题
+AI 群组头脑风暴 Web 应用：让多个 AI 围绕同一主题自由讨论，你可随时插话引导，并导出完整记录。
 
-## ✨ 特性
+## 使用方式
 
-- 🤖 **多 AI 参与**：最多 5 个具有不同性格和说话风格的 AI 同时参与讨论
-- 🎭 **自动生成人格**：每个 AI 会自动生成独特的昵称、性格和说话风格
-- 💬 **自由交互**：AI 可以自主选择回复用户、评论其他 AI 的观点或保持沉默
-- ⚡ **实时流式输出**：通过 WebSocket 实时展示 AI 的思考过程
-- 🎯 **用户引导**：随时插话改变话题方向或终止讨论
-- 📥 **导出记录**：会话结束后导出完整的讨论记录
+### 安装依赖
 
-## 🛠️ 技术栈
-
-- **后端**: Python 3.11 + FastAPI + LangChain 1.2.0
-- **数据库**: SQLite (SQLAlchemy 异步)
-- **前端**: 原生 HTML/CSS/JavaScript (无框架)
-- **通信**: WebSocket (实时双向通信)
-- **提示词**: Jinja2 模板 (Markdown 格式)
-- **日志**: Loguru
-- **包管理**: uv
-
-## 📦 安装
-
-### 1. 克隆仓库（如果尚未克隆）
-
-```bash
-cd /Users/tori/Desktop/Project/BrainstormAI
-```
-
-### 2. 安装依赖
+在项目根目录执行：
 
 ```bash
 uv sync
 ```
 
-### 3. 配置 API Key
+### 配置 API Key
 
-编辑 `config/app.yaml` 或创建 `config/app.local.yaml`（会覆盖默认配置）：
+推荐创建 `config/app.local.yaml`（会覆盖 `config/app.yaml` 的同名配置）
 
-```yaml
-llm:
-  base_url: "https://api.openai.com/v1"  # 或其他 OpenAI 兼容端点
-  api_key: "your-api-key-here"
-  default_model: "gpt-4o-mini"
-  temperature: 0.8
-```
-
-或者通过环境变量：
-
-```bash
-export BRAINSTORM_LLM__API_KEY="your-api-key-here"
-export BRAINSTORM_LLM__BASE_URL="https://api.openai.com/v1"
-```
-
-## 🚀 运行
-
-### 启动服务器
+### 启动服务
 
 ```bash
 uv run uvicorn src.app:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-或使用 main.py：
+或：
 
 ```bash
 uv run python main.py
 ```
 
-### 访问应用
+### 打开与使用
 
-打开浏览器访问：`http://localhost:8000`
+- 浏览器访问 `http://localhost:8000`
+- 输入讨论主题 → 选择 AI 数量（1–5）→ 开始
+- 讨论过程中可发送消息引导方向
+- 可暂停生成、结束会话，并导出记录（JSON）
 
-## 📖 使用指南
+### 常见问题
 
-### 1. 创建会话
-
-- 输入讨论主题（例如："春节给家人送什么礼物？"）
-- 选择参与的 AI 数量（1-5 个）
-- 点击 **"开始头脑风暴"**
-
-### 2. 观察 AI 讨论
-
-- AI 会自动生成不同的性格和说话风格
-- 它们会互相讨论、评论、提出不同观点
-- 实时流式显示每个 AI 的发言
-
-### 3. 参与讨论
-
-- 在输入框输入你的想法或问题
-- 按 Enter 或点击 **"发送"** 按钮
-- AI 会根据你的输入调整讨论方向
-
-### 4. 控制会话
-
-- **⏸️ 暂停 AI**：停止当前正在生成的 AI 回复
-- **🛑 结束会话**：结束讨论并关闭连接
-- **📥 导出记录**：下载完整的讨论记录（JSON 格式）
-
-## 📁 项目结构
-
-```
-BrainstormAI/
-├── config/
-│   └── app.yaml              # 配置文件
-├── src/
-│   ├── api/
-│   │   ├── http.py          # HTTP API 路由
-│   │   └── ws.py            # WebSocket 路由
-│   ├── config/
-│   │   ├── logging.py       # 日志配置
-│   │   └── settings.py      # 配置加载
-│   ├── domain/
-│   │   └── schemas.py       # Pydantic 数据模型
-│   ├── infra/
-│   │   ├── db/              # 数据库层
-│   │   ├── llm/             # LLM 工厂
-│   │   └── prompts/         # 提示词加载器
-│   ├── prompts/
-│   │   ├── persona_generation.j2   # AI 人格生成
-│   │   ├── agent_decision.j2       # AI 决策
-│   │   └── agent_reply.j2          # AI 回复生成
-│   ├── services/
-│   │   ├── orchestrator.py  # 群聊编排
-│   │   ├── persona.py       # 人格生成
-│   │   └── session.py       # 会话管理
-│   └── app.py               # FastAPI 应用
-├── static/
-│   ├── index.html           # 前端界面
-│   ├── style.css            # 样式
-│   └── app.js               # 前端逻辑
-├── main.py                  # 入口文件
-└── pyproject.toml          # 项目依赖
-```
-
-## ⚙️ 配置说明
-
-### LLM 配置
-
-```yaml
-llm:
-  base_url: "https://api.openai.com/v1"  # API 端点
-  api_key: ""                             # API 密钥
-  default_model: "gpt-4o-mini"           # 默认模型
-  temperature: 0.8                        # 创造性（0-2）
-  max_tokens: 1024                        # 最大 token 数
-  request_timeout: 60                     # 请求超时（秒）
-```
-
-### 会话配置
-
-```yaml
-session:
-  max_agents: 5                          # 最多 AI 数量
-  max_ai_messages_per_round: 10          # 每轮最多 AI 消息数
-  agent_cooldown_seconds: 2              # AI 冷却时间
-  max_auto_rounds: 5                     # 最大自动轮数
-  round_timeout_seconds: 120             # 轮次超时
-```
-
-## 🔌 API 文档
-
-### HTTP API
-
-- `POST /api/sessions` - 创建会话
-- `POST /api/sessions/{session_id}/end` - 结束会话
-- `GET /api/sessions/{session_id}/export` - 导出会话
-
-### WebSocket API
-
-连接：`ws://localhost:8000/ws/sessions/{session_id}`
-
-**客户端发送**：
-```json
-{"type": "user_message", "content": "你的消息"}
-{"type": "stop"}
-{"type": "end_session"}
-```
-
-**服务端发送**：
-```json
-{"type": "agents_ready", "data": {...}}
-{"type": "message_started", "data": {...}}
-{"type": "message_delta", "data": {"token": "..."}}
-{"type": "message_completed", "data": {...}}
-{"type": "status", "data": {...}}
-```
-
-## 🐛 故障排除
-
-### 1. greenlet 错误
-
-```bash
-uv sync  # 重新安装依赖
-```
-
-### 2. API Key 未设置
-
-确保在 `config/app.yaml` 或环境变量中设置了 `api_key`
-
-### 3. 数据库错误
-
-删除 `brainstorm.db` 文件并重启应用
-
-### 4. WebSocket 连接失败
-
-检查防火墙设置，确保 8000 端口可访问
-
-## 📝 开发说明
-
-### 添加新的 AI 模型
-
-编辑 `src/infra/llm/factory.py`，添加新的模型配置
-
-### 自定义提示词
-
-编辑 `src/prompts/` 目录下的 `.j2` 模板文件
-
-### 修改 UI
-
-编辑 `static/` 目录下的文件
-
-## 📄 许可证
-
-MIT License
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
----
-
-**提示**：首次运行时，AI 可能需要一些时间来生成人格。请耐心等待 ⏳
+- 若提示 API Key 未设置：检查 `config/app.local.yaml` / `config/app.yaml` 的 `llm.api_key`是否已生效
