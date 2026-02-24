@@ -1,0 +1,23 @@
+[project]
+name = "brainstormai"
+version = "0.1.0"
+description = "AI Group Chat Brainstorming - multiple AI agents discuss and debate topics freely"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.7.0",
+    "loguru>=0.7.0",
+    "jinja2>=3.1.0",
+    "sqlalchemy[asyncio]>=2.0.0",
+    "aiosqlite>=0.20.0",
+    "greenlet>=3.0.0",
+    "langchain==1.2.0",
+    "langchain-core>=1.2.0,<1.3.0",
+    "langchain-openai>=1.0.0,<2.0.0",
+    "openai>=1.60.0",
+    "pyyaml>=6.0.0",
+    "websockets>=14.0",
+]

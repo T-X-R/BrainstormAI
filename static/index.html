@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainstormAI - AI 群组头脑风暴</title>
+    <link rel="stylesheet" href="/static/style.css?v=5">
+</head>
+<body>
+    <!-- Background Decor -->
+    <div class="bg-decor">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🧠 BrainstormAI</h1>
+            <p class="subtitle">AI 群组头脑风暴 - 让 AI 们一起讨论你的问题</p>
+        </header>
+
+        <!-- Session Setup -->
+        <div id="setup-panel" class="panel setup-panel">
+            <h2>创建头脑风暴会话</h2>
+            <form id="session-form">
+                <div class="form-group">
+                    <label for="topic">讨论主题</label>
+                    <input 
+                        type="text" 
+                        id="topic" 
+                        placeholder="例如：春节给家人送什么礼物？" 
+                        required
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="agent-count">AI 参与者数量 (1-5)</label>
+                    <div class="slider-group">
+                        <input 
+                            type="range" 
+                            id="agent-count" 
+                            min="1" 
+                            max="5" 
+                            value="3"
+                        >
+                        <span id="agent-count-value">3</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>配置你的 AI 团队</label>
+                    <div id="agent-configs-container" class="agent-configs-grid">
+                        <!-- 动态生成的 AI 配置卡片将在这里 -->
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    🚀 开始头脑风暴
+                </button>
+            </form>
+        </div>
+
+        <!-- Chat Panel -->
+        <div id="chat-panel" class="panel chat-panel" style="display: none;">
+            <!-- Session Info -->
+            <div class="session-info">
+                <div class="topic-display">
+                    <strong>讨论主题：</strong>
+                    <span id="current-topic"></span>
+                </div>
+                <div class="actions">
+                    <button id="stop-btn" class="btn btn-warning">⏸️ 暂停 AI</button>
+                    <button id="end-btn" class="btn btn-danger">🛑 结束会话</button>
+                    <button id="export-btn" class="btn btn-secondary">📥 导出记录</button>
+                </div>
+            </div>
+
+            <!-- Agents Display -->
+            <div id="agents-panel" class="agents-panel">
+                <h3>AI 参与者</h3>
+                <div id="agents-list"></div>
+            </div>
+
+            <!-- Messages -->
+            <div id="messages" class="messages"></div>
+
+            <!-- User Input -->
+            <div class="input-area">
+                <input 
+                    type="text" 
+                    id="user-input" 
+                    placeholder="输入你的想法或问题..." 
+                    autocomplete="off"
+                >
+                <button id="send-btn" class="btn btn-primary">发送</button>
+            </div>
+
+            <!-- Status -->
+            <div id="status" class="status"></div>
+        </div>
+    </div>
+
+    <script src="/static/app.js?v=5"></script>
+</body>
+</html>
